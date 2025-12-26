@@ -16,9 +16,14 @@ O Agente deve executar os comandos, verificando o sucesso de cada etapa.
 
 2. **Se SIM, remover arquivos exclusivos do template:**
    ```bash
+   # Arquivos de governança do template
    rm -f CONTRIBUTING.md
    rm -f docs/ROADMAP.md
    rm -rf .github/workflows/test-template.yml
+   
+   # Regras específicas do template (não se aplicam a projetos derivados)
+   rm -f .agent/rules/contexto-template.md
+   rm -f .agent/rules/manter-changelog.md
    ```
 
 3. **Atualizar `context.md`:**
