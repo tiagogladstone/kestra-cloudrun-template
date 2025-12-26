@@ -1,0 +1,84 @@
+# Flow Template: Orquestração Multi-Worker
+# Copie este arquivo e adapte para seu caso
+
+id: nome-do-flow
+namespace: clientes.nome-cliente  # Alterar!
+description: |
+  Descrição do que este flow faz.
+  
+  - Passo 1: O que faz
+  - Passo 2: O que faz
+  - etc.
+
+inputs:
+  - id: input_exemplo
+    type: STRING
+    description: Descrição do input
+    required: true
+
+variables:
+  # URL dos workers (alterar para suas URLs)
+  worker_1_url: https://worker-1-xxx.run.app
+  worker_2_url: https://worker-2-xxx.run.app
+
+tasks:
+  # ============================================
+  # PASSO 1: Chamar primeiro worker
+  # ============================================
+  - id: passo_1
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.worker_1_url }}/"
+    method: POST
+    headers:
+      Content-Type: application/json
+      X-Correlation-ID: "{{ execution.id }}"
+    body: |
+      {
+        "input": "{{ inputs.input_exemplo }}"
+      }
+    options:
+      timeout: 30000
+      retries: 3
+
+  # ============================================
+  # PASSO 2: Processar resultado
+  # ============================================
+  - id: passo_2
+    type: io.kestra.plugin.core.http.Request
+    dependsOn:
+      - passo_1
+    uri: "{{ vars.worker_2_url }}/"
+    method: POST
+    headers:
+      Content-Type: application/json
+      X-Correlation-ID: "{{ execution.id }}"
+    body: |
+      {
+        "dados_anteriores": {{ outputs.passo_1.body }}
+      }
+
+  # ============================================
+  # PASSO FINAL: Registrar resultado
+  # ============================================
+  - id: finalizar
+    type: io.kestra.plugin.core.output.OutputValues
+    dependsOn:
+      - passo_2
+    values:
+      resultado: "{{ outputs.passo_2.body }}"
+      executado_em: "{{ now() }}"
+
+# ============================================
+# HANDLER DE ERRO
+# ============================================
+errors:
+  - id: notificar_erro_discord
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ secret('DISCORD_WEBHOOK_URL') }}"
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: |
+      {
+        "content": "❌ **Flow Falhou**\n- Flow: {{ flow.id }}\n- Namespace: {{ flow.namespace }}\n- Erro: {{ error.message }}"
+      }

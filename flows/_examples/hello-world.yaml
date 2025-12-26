@@ -1,0 +1,53 @@
+# Flow de Exemplo: Hello World
+# Este flow demonstra a estrutura básica
+
+id: hello-world
+namespace: exemplos
+description: |
+  Flow de exemplo que demonstra a estrutura básica.
+  - Recebe um nome como input
+  - Chama um worker (simulado com log)
+  - Retorna resultado
+
+inputs:
+  - id: nome
+    type: STRING
+    description: Nome para cumprimentar
+    required: true
+    defaults: "Mundo"
+
+tasks:
+  # Passo 1: Log do início
+  - id: log_inicio
+    type: io.kestra.plugin.core.log.Log
+    message: "🚀 Iniciando flow para: {{ inputs.nome }}"
+
+  # Passo 2: Simular chamada a worker
+  # Em produção, substituir por io.kestra.plugin.core.http.Request
+  - id: processar
+    type: io.kestra.plugin.core.log.Log
+    message: "📦 Processando: {{ inputs.nome }}"
+    dependsOn:
+      - log_inicio
+
+  # Passo 3: Gerar resultado
+  - id: resultado
+    type: io.kestra.plugin.core.output.OutputValues
+    values:
+      mensagem: "Olá, {{ inputs.nome }}!"
+      processado_em: "{{ now() }}"
+    dependsOn:
+      - processar
+
+  # Passo 4: Log do fim
+  - id: log_fim
+    type: io.kestra.plugin.core.log.Log
+    message: "✅ Flow concluído: {{ outputs.resultado.values.mensagem }}"
+    dependsOn:
+      - resultado
+
+# Handler de erro (opcional mas recomendado)
+errors:
+  - id: notificar_erro
+    type: io.kestra.plugin.core.log.Log
+    message: "❌ Flow falhou: {{ flow.id }} - Erro: {{ error.message }}"

@@ -1,0 +1,82 @@
+# Cloud Build Configuration
+# ============================================================
+# Deploy automático para Google Cloud Run baseado em TAGS.
+#
+# ⚠️ IMPORTANTE: Push normal para 'main' NÃO dispara deploy!
+# 
+# Para fazer deploy de um worker:
+#   1. git tag worker-NOME-v1   (ex: worker-hotmart-v1)
+#   2. git push origin worker-NOME-v1
+#
+# O nome do worker é extraído da tag (segundo segmento após 'worker-')
+# ============================================================
+
+steps:
+  # ==========================================================
+  # 1. Build da imagem Docker (usando a raiz como context)
+  # ==========================================================
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Descobre qual worker mudou ou foi taggeado
+        # Exemplo de tag: worker-hotmart-v1
+        
+        if [[ "$TAG_NAME" == worker-* ]]; then
+            WORKER_NAME=$(echo $TAG_NAME | cut -d'-' -f2)
+            echo "🛑 Building worker: $WORKER_NAME"
+            
+            # Substitui TODO_WORKER_NAME no Dockerfile temporário
+            sed "s/TODO_WORKER_NAME/workers\/$WORKER_NAME/g" workers/$WORKER_NAME/Dockerfile > Dockerfile.tmp
+            
+            docker build -f Dockerfile.tmp -t gcr.io/$PROJECT_ID/$WORKER_NAME:$TAG_NAME .
+            
+        else
+            echo "⚠️  Nenhuma tag de worker detectada. Pulando build."
+            exit 0
+        fi
+
+  # ==========================================================
+  # 2. Push da imagem para o Registry
+  # ==========================================================
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "$TAG_NAME" == worker-* ]]; then
+            WORKER_NAME=$(echo $TAG_NAME | cut -d'-' -f2)
+            docker push gcr.io/$PROJECT_ID/$WORKER_NAME:$TAG_NAME
+        fi
+
+  # ==========================================================
+  # 3. Deploy para Cloud Run
+  # ==========================================================
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "$TAG_NAME" == worker-* ]]; then
+            WORKER_NAME=$(echo $TAG_NAME | cut -d'-' -f2)
+            
+            echo "🚀 Deploying $WORKER_NAME para Cloud Run..."
+            
+            gcloud run deploy $WORKER_NAME \
+              --image gcr.io/$PROJECT_ID/$WORKER_NAME:$TAG_NAME \
+              --region us-central1 \
+              --platform managed \
+              --allow-unauthenticated \
+              --max-instances 5 \
+              --memory 512Mi \
+              --set-env-vars SUPABASE_URL=${_SUPABASE_URL} \
+              --set-env-vars GCP_PROJECT_ID=$PROJECT_ID
+        fi
+
+# Variáveis que podem ser substituídas
+substitutions:
+  _SUPABASE_URL: "https://seu-projeto.supabase.co"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
