@@ -59,7 +59,26 @@ O objetivo é atuar como **Product Manager e Arquiteto**, entrevistando o usuár
 
 ---
 
-## Fase 4: Interface (Se tiver Frontend)
+## Fase 4: Design System & Identidade
+
+1. **Entrevista Visual:**
+   - Perguntar: "Qual a identidade visual desejada?"
+     - **Cores Principais:** (Ex: Azul Profundo #003366, Laranja Vibrante)
+     - **Estilo:** (Ex: Minimalista, Executivo, Divertido, Dark Mode)
+     - **Logo:** (Existe ou precisa criar? Onde fica?)
+     - **Tipografia:** (Ex: Inter, Roboto, Serifada)
+
+2. **Gerar Documento:**
+   - Criar `docs/specs/4_INTERFACE/DESIGN_SYSTEM.md`
+   - Conteúdo:
+     - Paleta de Cores (Hex codes)
+     - Tipografia (Font Family)
+     - Componentes Base (Botões, Cards - Raio de borda, Sombras)
+     - Logotipo (URL ou instrução de placeholder)
+
+---
+
+## Fase 5: Interface (Mapas de Tela)
 
 1. **Perguntar:** "Quais telas são necessárias?" (Login, Dashboard, Listagem, Detalhe...)
 
@@ -72,7 +91,7 @@ O objetivo é atuar como **Product Manager e Arquiteto**, entrevistando o usuár
 
 ---
 
-## Fase 5: Validação Final
+## Fase 6: Validação Final
 
 1. **Perguntar ao Usuário:**
    - "O plano está completo? Posso salvar esses documentos como nossa 'Bíblia' do projeto?"

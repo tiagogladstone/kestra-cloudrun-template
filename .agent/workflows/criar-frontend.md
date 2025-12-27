@@ -23,6 +23,20 @@ Este workflow guia a criação de um novo frontend na pasta `frontend/`.
      - Src directory: Yes
      - Import alias: `@/*`
 
+## Fase 1.1: Configurar Design System (Conforme Planejado)
+
+1. **Ler Spec:**
+   - Ler `docs/specs/4_INTERFACE/DESIGN_SYSTEM.md`
+   - Ler `docs/specs/4_INTERFACE/TELAS_APP.md`
+
+2. **Aplicar Temas:**
+   - Configurar `tailwind.config.ts` com as cores do spec (primary, secondary, accent).
+   - Configurar `app/globals.css` com as variáveis CSS de cores.
+   - Configurar fontes em `app/layout.tsx`.
+
+3. **Gerar Componentes (ShadcnUI):**
+   - Ao instalar shadcn-ui, escolher o "base color" mais próximo do spec (Slate, Gray, Zinc, Neutral, Stone).
+
 ## Fase 2: Instalação de Bibliotecas Padrão
 
 1. **Instalar Dependências Essenciais:**

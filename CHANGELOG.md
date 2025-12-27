@@ -5,6 +5,18 @@ Todas as mudanças notáveis deste projeto serão documentadas aqui.
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.4.0] - 2024-12-27
+
+### Adicionado
+- Fase "Design System & Identidade" no workflow `/planejar-projeto`
+- Prédio de configuração de tema no workflow `/criar-frontend`
+- Documento `docs/specs/4_INTERFACE/DESIGN_SYSTEM.md` como padrão
+
+### Alterado
+- `/planejar-projeto` agora pergunta sobre cores, estilo (Dark/Light) e tipografia explicitamente
+
+---
+
 ## [1.3.0] - 2024-12-27
 
 ### Modificado (BREAKING)
