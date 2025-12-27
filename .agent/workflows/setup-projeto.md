@@ -73,28 +73,111 @@ O Agente deve executar os comandos, verificando o sucesso de cada etapa.
 
 ## Fase 3: Configuração Google Cloud (Infra Base)
 
-1. Verificar autenticação:
-   ```bash
-   gcloud auth list
-   ```
-   - Se não logado, pedir para usuário rodar `gcloud auth login` (não dá pra fazer pelo agente sem browser).
+### 3.1 Verificar autenticação
 
-2. Selecionar ou Criar Projeto:
-   - Perguntar: "Qual o ID do projeto no Google Cloud? (Se não tiver, digite 'novo' para eu criar)"
-   - Se 'novo':
-     ```bash
-     gcloud projects create ID_DO_PROJETO --name="Nome do Projeto"
-     ```
-   - Definir projeto atual:
-     ```bash
-     gcloud config set project ID_DO_PROJETO
-     ```
+```bash
+gcloud auth list
+```
 
-3. Habilitar APIs necessárias (Demora um pouco):
-   // turbo
+- Se não logado, pedir para usuário rodar `gcloud auth login` (não dá pra fazer pelo agente sem browser).
+- Se a conta desejada não está ativa, criar nova configuração:
+  ```bash
+  gcloud config configurations create NOME_CONFIG --activate
+  gcloud config set account EMAIL_DA_CONTA
+  ```
+
+### 3.2 Selecionar ou Criar Projeto
+
+- Perguntar: "Qual o ID do projeto no Google Cloud? (Se não tiver, digite 'novo' para eu criar)"
+- Se 'novo':
+  ```bash
+  gcloud projects create ID_DO_PROJETO --name="Nome do Projeto"
+  ```
+- Definir projeto atual:
+  ```bash
+  gcloud config set project ID_DO_PROJETO
+  ```
+
+### 3.3 ⚠️ VERIFICAR BILLING (Obrigatório!)
+
+> **IMPORTANTE:** Sem billing configurado, as APIs NÃO serão habilitadas!
+
+1. Verificar se billing está vinculado:
    ```bash
-   gcloud services enable run.googleapis.com cloudbuild.googleapis.com pubsub.googleapis.com cloudscheduler.googleapis.com compute.googleapis.com logging.googleapis.com errorreporting.googleapis.com secretmanager.googleapis.com
+   gcloud billing projects describe ID_DO_PROJETO
    ```
+
+2. Se aparecer erro ou `billingEnabled: false`:
+   - Instruir usuário: "Acesse https://console.cloud.google.com/billing/linkedaccount?project=ID_DO_PROJETO e vincule uma conta de faturamento."
+   - **Aguardar usuário confirmar** que vinculou o billing antes de prosseguir.
+
+3. Se `billingEnabled: true`, continuar.
+
+### 3.4 ⚠️ VERIFICAR PERMISSÕES
+
+> O usuário precisa ter papel de **Owner** ou **Editor** no projeto.
+
+```bash
+gcloud projects get-iam-policy ID_DO_PROJETO --format="table(bindings.role,bindings.members)" | head -20
+```
+
+- Verificar se o email da conta aparece com role `roles/owner` ou `roles/editor`.
+- Se não tiver permissão, instruir: "Você precisa pedir ao dono do projeto para te adicionar como Editor/Owner, ou criar um novo projeto com sua conta."
+
+### 3.5 Habilitar APIs (Uma por vez para diagnóstico)
+
+> ⚠️ Se falhar alguma, fica mais fácil identificar qual.
+
+// turbo
+```bash
+gcloud services enable run.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable cloudbuild.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable pubsub.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable cloudscheduler.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable compute.googleapis.com
+```
+
+// turbo  
+```bash
+gcloud services enable logging.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable clouderrorreporting.googleapis.com
+```
+
+// turbo
+```bash
+gcloud services enable secretmanager.googleapis.com
+```
+
+**Se alguma API falhar:**
+- Verificar se billing está ativo (seção 3.3)
+- Verificar permissões (seção 3.4)
+- Alguns projetos não têm Error Reporting disponível - pode pular se necessário
+
+### 3.6 Confirmar APIs ativas
+
+```bash
+gcloud services list --enabled --filter="name:(run OR cloudbuild OR pubsub OR cloudscheduler OR compute OR logging OR error OR secret)"
+```
 
 ## Fase 4: Kestra (Orquestrador)
 
