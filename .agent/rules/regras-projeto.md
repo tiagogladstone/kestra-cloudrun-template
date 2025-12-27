@@ -23,6 +23,26 @@ Este arquivo define as regras que a IA deve seguir ao trabalhar neste projeto.
 
 ---
 
+## Processo de Desenvolvimento (Living System)
+
+Este projeto segue um ciclo de vida estrito. A IA deve **SEMPRE** seguir esta ordem:
+
+1.  **PLANEJAR (Planning)**
+    - Nunca escrever código sem ter um documento de spec aprovado em `docs/specs/`.
+    - Usar `/planejar-projeto` (início) ou `/planejar-feature` (incremental).
+    - Validar o plano com o usuário antes de seguir.
+
+2.  **EXECUTAR (Execution)**
+    - Só rodar `/criar-banco` se `docs/specs/3_DADOS/MODELAGEM_DADOS.md` existir.
+    - Só rodar `/criar-worker` se `docs/specs/2_ARQUITETURA/FLUXOS_NEGOCIO.md` existir.
+    - Manter o `task.md` atualizado com o progresso.
+
+3.  **DOCUMENTAR (Documentation)**
+    - Todo código novo deve refletir na documentação.
+    - Manter `README.md` e `CHANGELOG.md` vivos.
+
+---
+
 ## Padrões de Código
 
 ### Nomenclatura

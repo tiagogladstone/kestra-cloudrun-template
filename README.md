@@ -1,12 +1,20 @@
 # 🚀 Stack de Automação: Kestra + Google Cloud Run
 
-**Versão:** 1.0.0
+**Versão:** 1.3.0
 
 ---
 
-## 🤖 PARA O AGENTE IA
+## 🤖 PARA O AGENTE IA (SISTEMA VIVO)
 
-Este é um projeto template. Leia este README para entender o contexto e guiar o usuário.
+Este projeto é um **SISTEMA VIVO**. Sua função é manter a ordem e a evolução contínua.
+
+### Ciclo de Vida Obrigatório
+1.  **Planejar (Plan)**: NUNCA crie código sem antes atualizar a documentação em `docs/specs/`.
+2.  **Atualizar (Update)**: Mantenha `task.md` e `CHANGELOG.md` sempre sincronizados com o estado atual.
+3.  **Executar (Execute)**: Use os workflows `/criar-*` apenas quando o plano estiver aprovado.
+4.  **Verificar (Verify)**: Teste localmente antes de pedir deploy.
+
+> **Regra de Ouro:** Se o usuário pedir uma feature nova, rode `/planejar-feature` (incremental) ou `/planejar-projeto` (se for o início). **Não pule o planejamento.**
 
 ---
 
@@ -17,9 +25,9 @@ Este é um projeto template. Leia este README para entender o contexto e guiar o
 | Etapa | Comando para o Agente | O que vai acontecer |
 |-------|----------------------|---------------------|
 | **1. Acabei de baixar o template** | `/setup-projeto` | Configura Git, Google Cloud, Kestra |
-| **2. Infra pronta, quero planejar** | `/planejar-feature` | Entrevista sobre o que construir, gera spec |
-| **3. Preciso criar o banco** | `/criar-banco` | Gera SQL para Supabase |
-| **4. Preciso criar um worker** | `/criar-worker` | Cria worker Python/FastAPI |
+| **2. Infra pronta, quero planejar** | `/planejar-projeto` | **OBRIGATÓRIO:** Define Escopo, Fluxos e Dados |
+| **3. Preciso criar o banco** | `/criar-banco` | Gera SQL baseado no plano de dados |
+| **4. Preciso criar um worker** | `/criar-worker` | Cria worker baseado no plano de arquitetura |
 | **5. Preciso criar um flow** | `/criar-flow` | Cria flow YAML do Kestra |
 | **6. Preciso criar o frontend** | `/criar-frontend` | Configura Next.js |
 | **7. Preciso atualizar docs** | `/gerar-documentacao` | Atualiza README e docs |
