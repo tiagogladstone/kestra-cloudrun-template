@@ -6,6 +6,8 @@ description: Como criar um novo worker para Cloud Run
 
 ## Pré-requisitos
 
+- **Planejamento Realizado:** O arquivo `docs/specs/2_ARQUITETURA/FLUXOS_NEGOCIO.md` DEVE existir.
+  - Se não existir, dizer: "Não posso criar worker sem saber a arquitetura. Rode /planejar-projeto primeiro."
 - Repositório já configurado
 - Template `workers/_template` existe
 - Docker instalado localmente

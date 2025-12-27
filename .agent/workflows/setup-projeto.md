@@ -307,8 +307,8 @@ Então, o agente deve instruir o usuário:
   - ✅ Vercel configurado (se aplicável)
   - ✅ CI/CD configurado
 
-- **Próximos passos:**
-  - "Agora você pode:"
-    - `/planejar-feature` - Para definir o que construir
-    - `/criar-banco` - Para criar as tabelas
-    - `/criar-worker` - Para criar o primeiro worker
+- **Próximos passos (OBRIGATÓRIO):**
+  - "Agora você DEVE rodar o planejamento mestre:"
+    - `/planejar-projeto` - Para definir Escopo, Arquitetura e Dados (Gera a documentação oficial)
+
+> ⚠️ Atenção: Não execute `/criar-banco` ou `/criar-worker` sem antes rodar o planejamento!

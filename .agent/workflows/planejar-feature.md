@@ -7,50 +7,33 @@ description: Planejar nova funcionalidade (Requisitos + Banco de Dados + Fluxo)
 Este workflow guia o Agente IA para atuar como **Product Manager e Arquiteto de Software**.
 O objetivo é transformar uma ideia vaga do usuário em um plano técnico executável.
 
+# Planejamento de Feature (Incremental)
+
+Este workflow é para adicionar **NOVAS funcionalidades** em um projeto já existente.
+Se você está começando o projeto agora, use `/planejar-projeto` (Planejamento Mestre).
+
 ## Fase 1: Entrevista de Produto (Discovery)
 
 1. **Perguntar ao usuário:**
-   - "Qual o objetivo principal desta nova funcionalidade?"
-   - "Quem vai usar? (Admin, usuário final, sistema externo)"
-   - "Quais dados precisam ser armazenados?"
-   - "Existe alguma integração externa necessária (API, Webhook)?"
+   - "Qual o objetivo desta nova funcionalidade?"
+   - "Ela altera fluxos existentes ou cria novos?"
 
-2. **Refinar Requisitos:**
-   - Analisar as respostas.
-   - Se houver ambiguidades, fazer perguntas de esclarecimento.
-   - "Exemplo: Quando você diz 'notificar o usuário', é por email, whatsapp ou push?"
+## Fase 2: Atualização de Documentação (Specs)
 
-## Fase 2: Modelagem de Dados (Schema)
+1. **Ler documentação atual:**
+   - `docs/specs/1_PRODUTO/ESCOPO_GERAL.md`
+   - `docs/specs/2_ARQUITETURA/FLUXOS_NEGOCIO.md`
+   - `docs/specs/3_DADOS/MODELAGEM_DADOS.md`
 
-1. **Propor Estrutura de Banco de Dados:**
-   - Criar um diagrama ER (em texto/mermaid) ou lista de tabelas.
-   - Definir campos chaves e tipos.
-   - IMPORTANTE: Seguir padrões do Supabase (RLS, UUIDs).
+2. **Propor alterações (Diff):**
+   - "Para essa feature, precisamos alterar tabela X e criar worker Y."
 
-2. **Validar com Usuário:**
-   - "Esta estrutura de dados faz sentido para você? Falta algum campo?"
+3. **Atualizar Arquivos de Specs:**
+   - O Agente deve editar os arquivos markdown em `docs/specs/` refletindo as mudanças.
+   - **Regra:** A documentação deve estar sempre atualizada antes de codar.
 
-## Fase 3: Desenho do Fluxo
+## Fase 3: Próximos Passos
 
-1. **Definir Padrão de Fluxo:**
-   - Consultar `docs/arquitetura/PADROES_FLUXO.md`.
-   - Classificar em Padrão A, B ou C.
-   - Justificar a escolha.
-
-2. **Esboçar Componentes:**
-   - Listar quais Workers serão criados/alterados.
-   - Listar quais Flows do Kestra serão criados.
-   - Listar quais telas do Frontend serão necessárias.
-
-## Fase 4: Saída (Deliverable)
-
-1. **Gerar Documento de Especificação:**
-   - Criar arquivo: `docs/specs/[nome-da-feature].md`
-   - Conteúdo:
-     - Resumo
-     - Modelagem de Dados (SQL Draft)
-     - Diagrama de Fluxo
-     - Lista de Tarefas (Checklist)
-
-2. **Perguntar:**
-   - "O plano está aprovado? Posso iniciar o setup do banco de dados com /criar-banco?"
+1. **Após atualizar os specs, o usuário pode rodar:**
+   - `/criar-banco` (vai ler o spec atualizado)
+   - `/criar-worker` (vai implementar a lógica)

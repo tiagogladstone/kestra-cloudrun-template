@@ -1,5 +1,5 @@
 ---
-trigger: always_on
+trigger: model_decision
 description: Contexto do projeto template e conexões MCP disponíveis
 ---
 

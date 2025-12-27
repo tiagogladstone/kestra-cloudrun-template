@@ -5,6 +5,22 @@ Todas as mudanças notáveis deste projeto serão documentadas aqui.
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.3.0] - 2024-12-27
+
+### Modificado (BREAKING)
+- Criado workflow obrigatório `/planejar-projeto` ("Planejamento Mestre")
+- Reestruturada pasta `docs/specs/` em 4 pilares: `1_PRODUTO`, `2_ARQUITETURA`, `3_DADOS`, `4_INTERFACE`
+- `/setup-projeto` agora obriga a ir para `/planejar-projeto`
+- `/criar-banco` exige `docs/specs/3_DADOS/MODELAGEM_DADOS.md`
+- `/criar-worker` exige `docs/specs/2_ARQUITETURA/FLUXOS_NEGOCIO.md`
+- `/planejar-feature` refatorado para ser incremental apenas
+
+### Corrigido
+- Eliminado o problema de "executar sem planejar"
+- Eliminada a confusão de onde salvar arquivos de especificação (agora têm lugares fixos)
+
+---
+
 ## [1.2.0] - 2024-12-26
 
 ### Adicionado

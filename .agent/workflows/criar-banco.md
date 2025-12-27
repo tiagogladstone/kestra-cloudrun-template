@@ -7,8 +7,19 @@ description: Criar tabelas e migrations no Banco de Dados (Supabase)
 Este workflow guia o Agente IA na criação de estruturas de banco de dados e migrations.
 
 ## Pré-requisitos
-- Ter executado `/planejar-feature` (ou ter um plano claro).
+## Pré-requisitos
+- **Planejamento Realizado:** O arquivo `docs/specs/3_DADOS/MODELAGEM_DADOS.md` DEVE existir.
+  - Se não existir, abortar e mandar rodar: `/planejar-projeto`
 - **Supabase MCP conectado** (o Agente tem acesso direto ao banco!).
+
+## Fase 0: Verificar Planejamento
+
+1. **Checar existência do arquivo:**
+   - Verificar se `docs/specs/3_DADOS/MODELAGEM_DADOS.md` existe.
+   - Se não, **PARAR TUDO** e dizer:
+     > "⛔ **Planejamento Ausente!**
+     > Você precisa rodar `/planejar-projeto` primeiro para definir a modelagem de dados oficial.
+     > Não criamos banco sem documento de especificação."
 
 ## Fase 1: Descobrir Projeto Supabase
 
