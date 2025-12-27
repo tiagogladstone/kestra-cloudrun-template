@@ -26,11 +26,15 @@ O Agente deve executar os comandos, verificando o sucesso de cada etapa.
    rm -f .agent/rules/manter-changelog.md
    ```
 
-3. **Atualizar `context.md`:**
-   - Preencher a seção "Origem do Projeto" com:
+3. **Atualizar `.agent/rules/context.md`:**
+   > ⚠️ IMPORTANTE: O arquivo `context.md` já existe em `.agent/rules/context.md`. NÃO criar em outro lugar!
+   
+   - Abrir o arquivo `.agent/rules/context.md`
+   - Preencher a seção "Informações Gerais" com:
      - Nome do projeto
      - Versão do template usada (ler do arquivo `VERSION`)
      - Data de criação
+     - Conta Google Cloud do usuário
 
 4. **Atualizar `README.md`:**
    - Remover a seção "VOCÊ ESTÁ NO TEMPLATE OU EM UM PROJETO?"

@@ -34,7 +34,7 @@ Arquivos que geralmente podem ser atualizados sem conflito:
 Arquivos que provavelmente têm customização e precisam merge manual:
 - `workers/` (tem código específico do projeto)
 - `flows/` (tem flows específicos)
-- `.agent/context.md` (tem estado específico)
+- `.agent/rules/context.md` (tem estado específico do projeto)
 
 ## Fase 4: Aplicar Atualizações
 

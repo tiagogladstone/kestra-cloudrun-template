@@ -5,6 +5,15 @@ Todas as mudanças notáveis deste projeto serão documentadas aqui.
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.1] - 2024-12-26
+
+### Corrigido
+- Criado arquivo `context.md` dentro de `.agent/rules/` (antes não existia, causando criação no lugar errado)
+- Workflow `/setup-projeto` agora especifica caminho completo `.agent/rules/context.md`
+- Workflow `/atualizar-template` corrigido para referenciar `.agent/rules/context.md`
+
+---
+
 ## [1.1.0] - 2024-12-26
 
 ### Adicionado
