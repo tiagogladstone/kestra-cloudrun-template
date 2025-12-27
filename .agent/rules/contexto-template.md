@@ -1,5 +1,5 @@
 ---
-trigger: always
+trigger: always_on
 description: Contexto do projeto template e conexões MCP disponíveis
 ---
 

@@ -1,5 +1,5 @@
 ---
-trigger: always
+trigger: always_on
 description: Contexto específico do projeto (preencher ao criar novo projeto)
 ---
 
